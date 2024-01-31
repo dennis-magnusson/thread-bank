@@ -1,0 +1,25 @@
+CC = gcc
+CFLAGS = -Wall -pedantic
+
+CLIENT_SRCS = client.c
+SERVER_SRCS = server.c queue.c logger.c
+
+CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
+SERVER_OBJS = $(SERVER_SRCS:.c=.o)
+
+CLIENT_EXECUTABLE = client
+SERVER_EXECUTABLE = server
+
+all: $(CLIENT_EXECUTABLE) $(SERVER_EXECUTABLE)
+
+$(CLIENT_EXECUTABLE): $(CLIENT_OBJS)
+	$(CC) $(CFLAGS) -o $@ $(CLIENT_OBJS)
+
+$(SERVER_EXECUTABLE): $(SERVER_OBJS)
+	$(CC) $(CFLAGS) -o $@ $(SERVER_OBJS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(CLIENT_OBJS) $(SERVER_OBJS) $(CLIENT_EXECUTABLE) $(SERVER_EXECUTABLE)
